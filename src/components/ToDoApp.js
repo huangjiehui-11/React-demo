@@ -3,6 +3,7 @@ import Input from './input';
 import List from './List';
 import Time from './Timing';
 import ReactHooks from './ReactHooks';
+import Stop from './Stop';
 
 class ToDoApp extends React.Component {
   // constructor(props) {
@@ -69,6 +70,8 @@ class ToDoApp extends React.Component {
               <Time />
               <hr/>
               <ReactHooks />
+              <hr/>
+              <Stop />
             </div>
           </div>
         </div>
