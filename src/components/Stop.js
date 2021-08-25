@@ -1,6 +1,6 @@
 import React, { Component } from 'react';  //解决合并问题
 
-export default class Stop extends Component {
+export default class Stop extends Component { //测试合并之后其他地方修改是否能合并进去
   componentDidMount() {
     let parent = document.getElementById('parent');
     let child = document.getElementById('child');
