@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react';  //jiejuehebingwenti
 
 export default class Stop extends Component {
   componentDidMount() {
