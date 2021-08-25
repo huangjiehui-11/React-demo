@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react';  //解决git合并问题
 
 export default class Stop extends Component {
   componentDidMount() {
