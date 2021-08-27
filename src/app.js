@@ -1,7 +1,10 @@
 import { divide } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ToDoApp from './components/ToDoApp'
+import { Provider } from 'react-redux';
+import ToDoApp from './components/ToDoApp';
+import ToDoAppContainer from './redux/containers/ToDoAppContainer';
+import store from './redux/configStore'
 
 // Stateless Functional Component
 // 函数型组件没有生命周期方法和state属性，但有props参数

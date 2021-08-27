@@ -1,16 +1,15 @@
 import { initial } from 'lodash';
-import { connect } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
+import toDoApp from './modules/toDoApp'
 
 const loggerMiddleware = createLogger();
 
-const reducer = connect(
-  
+const reducer = combineReducers(
+  toDoApp
 )
 
 export default store = createStore(
   reducer,
-  initialState,
   applyMiddleware(loggerMiddleware)
 )

@@ -400,5 +400,288 @@ react hooks 的出现，标示着 react 中不会在存在无状态组件了，�
 
 在 components 下新建 ReachHooks.js 组件，在里面测试 react hooks 用法与特性。
 
-## 8. 
+## 8. 添加新列表事项
+
+现在需要向列表中添加新的事项，也就是在提交后能把输入框的值存储并显示到列表中。我们需要再新建一个`onInputSubmit`的方法，参数同样是`event`，函数体内首先需要写  `event.preventDefault()`。
+
+注意：写在form表单里的`<button>`或者`<input type=”submit” />`提交按钮上绑定的事件，或者form表单上绑定的事件，必须在事件函数里加上event.preventDefault()，阻止html的默认提交行为（阻止跳转，如果没有设置action属性，则是跳转回原页面，即重新刷新页面），否则会重新刷新页面（如果事件函数里进行了setState则无效，因为重新刷新了页面）。
+
+可以将button写在form标签外，这样不写preventDefault也不会触发html的默认提交行为。React的form表单里面的button和input点击都会提交表单，如果没有绑定事件，则会执行form标签上绑定的事件。想要form标签上的事件也能不被表单默认html行为所影响，要加上`event.preventDefault()`。
+
+然后用 `setState` 方法把新事项添加到列表数组中，但是，一定要注意我们的state应该是immutable的，这是react中必须遵循的一个准则，这样才能保证对比性与可靠性。
+
+为了实现这个功能, 需要用到`this.setState` 回调函数，参数为`previousState`：
+
+```javascript
+this.setState((previousState)=>({
+  list: previousState.list.push(previousState.newToDo)
+}))
+```
+
+正如我上面的描述，最开始写state的时候很多人都会犯这样的错误，直接用push这样的方法，修改了state，这样就不算immutable的，我们一定要保证绝不直接修改原state。
+
+这里又可以用到ES6中的新特性了，扩展操作符，它通过遍历旧数组返回一个新数组，使旧的数组保持原样，这样我们就把事项添加到列表数组末尾：
+
+```javascript
+this.setState((previousState)=>({
+  list: [...previousState.list, previousState.newToDo ], // the spread opperator is called by using the ... preceding the array
+}));
+```
+
+在提交添加新事项的同时，需要将`newToDo`重置为`''`：
+
+```javascript
+this.setState((previousState)=>({
+  list: [...previousState.list, previousState.newToDo ],
+  newToDo: ''
+}));
+```
+
+## 9. 划掉事项
+
+是时候添加划掉事项的功能了。为了实现这个功能需要添加一个新的属性用来标注是否需要划掉，因此需要改变原来的数组为一个对象数组，每一个事项都是一个对象，一个key为`item`表示原来的事项内容，一个key为`done`用布尔值来表示是否划掉。 然后先把原来的`onInputSubmit `方法修改，同样要注意immutable，使用扩展操作符如下：
+
+```javascript
+onInputSubmit = (event) => {
+  event.preventDefault();
+  this.setState((previousState)=>({
+    list: [...previousState.list, {item: previousState.newToDo, done: false }], // notice the change here
+    newToDo: ''
+  }));
+};
+```
+
+属性`done`添加完成后就需要新增一个方法当点击事项时候来改变这个值：
+
+```javascript
+onListItemClick = (i) => { // takes the index of the element to be updated
+  this.setState((previousState)=>({
+    list: [
+      ...previousState.list.slice(0, i), // slice returns a new array without modifying the existing array. Takes everything up to, but not including, the index passed in.
+      Object.assign({}, previousState.list[i], {done: !previousState.list[i].done}), // Object.assign is a new ES6 feature that creates a new object based on the first param (in this case an empty object). Other objects can be passed in and will be added to the first object without being modified.
+      ...previousState.list.slice(i+1) // takes everything after the index passed in and adds it to the array.
+    ]
+  }))
+};
+```
+然后把这个方法通过props传递给`List` 组件，这里就没有使用解构参数传递，用来和`Input`的做对比。因为这个函数需要一个参数就是当前列表的序列号，但是肯定不能直接call这个函数否则会报错，因此使用bind方法，传入`i`参数：
+
+```javascript
+onClick={props.onClick.bind(null, i)}  // 传入null，this都可以，都是去根组件拿到这个函数，this的话通过作用域链往上找，null指向根组件直接就可以拿到。
+// onClick={props.onClick.bind(this, i)} 
+```
+
+当然还有另一种方法：
+
+```javascript
+onClick={() => props.onClick(i)}
+```
+
+然后在事项内容的`span`标签上添加 `onClick` 方法，改变当前事项的`done`值后，在通过判断此布尔值来进行样式的修改添加或者划掉删除线。
+
+```javascript
+<span
+  style={
+    el.done
+    ? {textDecoration: 'line-through', fontSize: '20px'}
+    : {textDecoration: 'none', fontSize: '20px'}
+  }
+  onClick={props.onClick.bind(null, i)}
+>
+```
+
+## 10. 删除事项
+
+最后我们在添加删除事项的功能，这个和划掉事项非常相似，我们只需要新增一个删除按钮，然后再新增一个方法修改列表，具体代码如下：
+
+```javascript
+<button
+  className="btn btn-danger pull-right"
+  >
+  x
+</button>
+```
+
+```javascript
+deleteListItem = (i) => {
+  this.setState((previousState)=>({ // using previous state again
+    list: [
+      ...previousState.list.slice(0, i), // again with the slice method
+      ...previousState.list.slice(i+1) // the only diffence here is we're leaving out the clicked element
+    ]
+  }))
+};
+```
+
+把`deleteListItem` 方法传递到列表组件中然后在删除按钮上绑定即可，仿照上一个自己写一下就好。
+
+现在我们有一个完整功能的APP了，是不是感觉很cool，这个就是不用redux时候的形态了，但是你会发现当状态越来越复杂时候很繁琐，因此我们下面就要介绍redux来管理状态了。
+
+# 迁移到redux的准备工作
+
+截至目前我们已经学会如何用webpack和babel搭建react应用，构建类组件和函数型组件并处理state，添加功能。然而这只是基本满足一个小型应用的需求，随着app的增长，处理数据和行为会越来越吃力，这就是要引入redux的必要性。
+
+那么redux如何处理数据？首先，redux给你的app一个单一的state对象，与flux等根据view来划分为多个state对象正好相反。你可能会有疑问，一个单一的对象来处理一个复杂的app岂不是非常复杂？redux采用的方法是把数据处理分为`reducer functions`、`action creators`和`actions`然后组合在一起工作流线型的处理数据。
+
+## 1. 首先安装必须的依赖
+
+首先安装 `redux` and `react-redux`
+
+```
+npm install --save redux
+npm install --save react-redux
+```
+
+然后安装 redux middleware，这里就先安装 `redux-logger`，它的功能是帮助我们开发。
+
+```
+npm install --save redux-logger
+```
+还有一些常用的中间件，比如 `redux-thunk` and `redux-promise`, 但是在我们的这个项目中暂时先不需要，可以自行去github了解。
+
+## 2. 构建
+使用redux构建react应用一般都有一个标准的模板，可能不同模板形式上有区别，但是思想都是一样的，下面就先按照一种文件结构来构建。
+
+首先我们在`src`中新建一个文件夹`redux`，然后在其中新建一个文件`configureStore.js`，添加以下代码：
+
+```javascript
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import createLogger from 'redux-logger';
+```
+
+`createStore` 是由redux提供的用来初始化store的函数， `applyMiddleware`是用来添加我们需要的中间件的。
+
+`combineReducers` 用来把多个`reducers`合并为一个单一实体。
+
+`createLogger` 就是我们这里唯一使用的一个中间件，可以`console`出每一个`action`后数据的详细处理过程，给调试带来了很大方便。
+
+然后添加下面代码：
+
+```javascript
+const loggerMiddleware = createLogger(); // initialize logger
+
+// const createStoreWithMiddleware = applyMiddleware( loggerMiddleware)(createStore); // apply logger to redux  // 柯里化函数的写法
+
+// 一般写法：
+export default store = createStore(
+  reducer,
+  applyMiddleware(loggerMiddleware)
+)
+```
+
+这里暂时没有完成，需要后面的模块写完了再导入到这里继续来完成。
+
+## 3. 模块Modules
+
+在 `src/redux/` 新建一个文件夹 `modules`。在这个文件夹中我们将存放所有的`reducers`，`action creators`和`constants`。这里我们使用的redux组织结构叫做`ducks`，思想就是把相关的`reducers`，`action creators`和`constants`都放在一个单独的文件中，而不是分开放在多个文件中，这样修改一个功能时候直接在一个文件中修改就可以。 
+
+在 `modules` 文件中新建 'toDoApp.js'，注意这里的命名是依据容器组件的名字来命名，这个也是规范，容易管理代码。
+
+现在我们可以开始创建`initial state `和 `reducer function`，这其实非常简单，`state`就是一个js对象，`reducer`就是js的switch语句：
+```javascript
+const initialState = {}; //The initial state of this reducer (will be combined with the states of other reducers as your app grows)
+
+export default function reducer(state = initialState, action){ // a function that has two parameters, state (which is initialized as our initialState obj), and action, which we'll cover soon.
+  switch (action.type){
+  default:
+    return state;
+  }
+}
+```
+
+## 4. 完善Store
+
+现在我们已经完成了第一个`reducer`，可以将其添加到 `configureStore.js` 中去了， 导入： `import toDoApp from './modules/toDoApp';`
+
+然后用`combineReducers ` 来组合当前的`reducer`，因为未来会有更多的模块加入。
+
+```javascript
+const reducer = combineReducers({
+  toDoApp
+});
+```
+
+最后在底部加入下面完整的代码：
+
+```javascript
+//const configureStore = (initialState) => createStoreWithMiddleware(reducer, initialState);
+//export default configureStore;
+
+// 正常一般写法：
+export default store = createStore(
+  reducer,
+  applyMiddleware(loggerMiddleware)
+)
+```
+
+Cool. We're done here.
+
+## 5. Connect
+
+现在我们已经有了一个`reducer`，那么怎么和app建立联系呢？这需要两步工作。
+
+前面已经讲过类组件和函数型组件，有时候也可以称为`smart components`和` dumb components`，这里我们新增一种容器组件，顾名思义，这种组件就是作为一个容器用来给组件提供`actions`和`state`。
+
+下面来创建第一个容器组件，首先在 `/src/` 下新增一个文件夹`containers`，然后再其下面新建一个文件 `toDoAppContainer.js`。
+在文件顶部首先导入 `connect` 用来将容器和组件联系在一起，
+
+```javascript
+import { connect } from 'react-redux';
+import ToDoApp from '../../components/ToDoApp.js'
+```
+
+`connect` 这个函数被调用两次, 第一次是两个回调函数: `mapStateToProps` and `mapDispatchToProps`。 第二次是把`state`和`dispatch`传入组件的时候。这里的`dispatch`又是什么呢？
+
+当我们需要在redux中发生某些行为时候，就需要调用`dispatch`函数传递一个`action`然后调用`reducer`这一套流程。因为我们还没有编写具体的行为，这里就暂时空白，后面再补，代码形式如下：
+
+```javascript
+function mapStateToProps(state) {
+  return {
+    toDoApp: state.toDoApp // keys就是传给对应容器组件的变量名
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {}; // return一个对象，对象里的键值对就是对应容器组件所使用的函数
+}
+```
+
+然后在底部添加：
+
+```javascript
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToDoApp);
+```
+
+6. Provider
+
+redux的基本工作已经完成，最后一步就是返回到`app.js` 文件， 首先我们不再需要导入 `ToDoApp` 组件，而是用容器组件`ToDoAppContainer`来替代，然后需要导入 `configureStore` 函数和 `Provider`，在头部添加代码：
+
+```javascript
+import { Provider } from 'react-redux';
+import ToDoAppContainer from './redux/containers/ToDoAppContainer';
+import store from './redux/configureStore';
+```
+
+然后return的jsx中同样需要把`ToDoApp` 改为 `ToDoAppContainer`，然后需要用`Provider` 组件将其包裹，它的作用就是将整个app的state传递给它所包裹的容器，从而使容器组件可以获取这些state。
+
+```javascript
+<Provider store={store}> // we pass the store through to Provider with props
+  <ToDoAppContainer />
+</Provider>
+```
+
+现在整个redux的基本结构已经搭建起来，下一步就可以把整个行为逻辑代码补充进去就可以了。
+
+
+
+
+
+
+
+
+
+
 
