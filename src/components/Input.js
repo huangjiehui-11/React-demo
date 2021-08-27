@@ -5,9 +5,15 @@ class Input extends React.Component {
     super(props)
   }
 
+  // 如果form标签里的button或input标签没有绑定事件，点击之后会执行form标签上绑定的事件
+  onSubmit = () => {
+    console.log('submit')
+  }
+
   render() {
     return (
-      <form>
+      <div>
+        <form onSubmit={this.onSubmit}>
         <div className="form-group">
           <label htmlFor="listInput">
             Email address
@@ -18,13 +24,27 @@ class Input extends React.Component {
             id="listItemInput"
             // placeholder="Add new todo"
             value={this.props.values}
-            onChange={this.props.onChange}
+            onChange={this.props.onChange} 
           />
-          <button className="btn btn-primary">
+          <button 
+            className="btn btn-primary"
+            onClick={this.props.onInputSubmit}
+          >
             Add Item
           </button>
+          <input type="submit" onClick={this.props.onInputSubmit}/> 
         </div>
       </form>
+      {/* onInputSubmit事件函数里可以不用写preventDefault() */}
+      {/* <button 
+            className="btn btn-primary"
+            onClick={this.props.onInputSubmit}
+          >
+            Add Item
+          </button> */}
+      </div>
+      
+      
     )
   }
 }
