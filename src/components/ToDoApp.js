@@ -23,9 +23,14 @@ class ToDoApp extends React.Component {
     // })
 
     // 写成箭头函数的形式，组件使用时不需要显示绑定this
+    // this.onInputChange = (event) => {
+    //   this.setState({ newToDo: event.target.value}); // updates state to new value when user changes the input value
+    // };
+
+    // 使用react-redux的写法
     this.onInputChange = (event) => {
-      this.setState({ newToDo: event.target.value}); // updates state to new value when user changes the input value
-    };
+      this.props.inputChange(event.target.value)  // 使用react-redux的容器组件的mapDispatchToProps里注册的函数 // 将修改state的逻辑放在了reducer里
+    } 
   }
 
   // onInputChange = (event) => {
@@ -47,36 +52,53 @@ class ToDoApp extends React.Component {
     })
   }
 
+  // onInputSubmit = (event) => {
+  //   event.preventDefault();  //如果表单form里的button按钮写在form表单之外，则不需要preventDefault
+  //   this.setState((preState) => ({
+  //     list: [...preState.list, {item: preState.newToDo, done: false }],  //不改变原state的list
+  //     // newToDo: ''
+  //   }));
+  //   console.log('this.state: ', this.state.list);
+  // }
+
+  // 使用react-redux的写法：
   onInputSubmit = (event) => {
-    event.preventDefault();  //如果表单form里的button按钮写在form表单之外，则不需要preventDefault
-    this.setState((preState) => ({
-      list: [...preState.list, {item: preState.newToDo, done: false }],  //不改变原state的list
-      // newToDo: ''
-    }));
-    console.log('this.state: ', this.state.list);
+    event.preventDefault();
+    this.props.inputSubmit()  // 将修改state的逻辑放在了reducer里
   }
 
-  onListItemClick = (i) => { // takes the index of the element to be updated
-    this.setState((preState)=>({
-      list: [
-        ...preState.list.slice(0, i), // slice returns a new array without modifying the existing array. Takes everything up to, but not including, the index passed in.
-        Object.assign({}, preState.list[i], {done: !preState.list[i].done}), // Object.assign is a new ES6 feature that creates a new object based on the first param (in this case an empty object). Other objects can be passed in and will be added to the first object without being modified.
-        ...preState.list.slice(i+1) // takes everything after the index passed in and adds it to the array.
-      ]
-    }))
-  };
+  // onListItemClick = (i) => { // takes the index of the element to be updated
+  //   this.setState((preState)=>({
+  //     list: [
+  //       ...preState.list.slice(0, i), // slice returns a new array without modifying the existing array. Takes everything up to, but not including, the index passed in.
+  //       Object.assign({}, preState.list[i], {done: !preState.list[i].done}), // Object.assign is a new ES6 feature that creates a new object based on the first param (in this case an empty object). Other objects can be passed in and will be added to the first object without being modified.
+  //       ...preState.list.slice(i+1) // takes everything after the index passed in and adds it to the array.
+  //     ]
+  //   }))
+  // };
 
+  // 使用react-redux的写法：
+  onListItemClick = (i) => {
+    this.props.listItemClick(i)  // 将修改state的逻辑放在了reducer里
+  }
+
+  // deleteListItem = (i) => {
+  //   this.setState((previousState)=>({ // using previous state again
+  //     list: [
+  //       ...previousState.list.slice(0, i), // again with the slice method
+  //       ...previousState.list.slice(i+1) // the only diffence here is we're leaving out the clicked element
+  //     ]
+  //   }))
+  // };
+
+  // 使用react-redux的写法：
   deleteListItem = (i) => {
-    this.setState((previousState)=>({ // using previous state again
-      list: [
-        ...previousState.list.slice(0, i), // again with the slice method
-        ...previousState.list.slice(i+1) // the only diffence here is we're leaving out the clicked element
-      ]
-    }))
-  };
+    this.props.deleteListItem(i)  // 将修改state的逻辑放在了reducer里
+  }
 
   render() {
     console.log('This.state.newToDo: ', this.state.newToDo)
+    console.log(this.props)
     return (
       <div className="row">
         <div className="col-md-10 col-md-offset-1">
@@ -84,10 +106,14 @@ class ToDoApp extends React.Component {
             <div className="panel-body">
               <h1>My To Do App</h1>
               <hr/>
-              <List  count={this.state.count} listItems={this.state.list} onListItemClick={this.onListItemClick} deleteListItem={this.deleteListItem}/>
+              <List
+                count={this.state.count} 
+                listItems={this.props.toDoApp.list} 
+                onListItemClick={this.onListItemClick} 
+                deleteListItem={this.deleteListItem}/>
               <hr/>
               <Input 
-                values = {this.state.newToDo}
+                values = {this.props.toDoApp.newToDo}
                 onChange = {this.onInputChange}
                 onInputSubmit = {this.onInputSubmit}
               />
@@ -98,7 +124,7 @@ class ToDoApp extends React.Component {
               <button onClick={() => this.handleClick()}>无bind点击一下（普通函数形式）</button>
               <button onClick={this.handleClick.bind(this)}>有bind点击一下（普通函数形式）</button>
               <hr/>
-              <Time />
+              {/* <Time /> */}
               <hr/>
               <ReactHooks />
               <hr/>

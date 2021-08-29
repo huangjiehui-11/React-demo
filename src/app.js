@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import ToDoApp from './components/ToDoApp';
-import ToDoAppContainer from './redux/containers/ToDoAppContainer';
+import ToDoAppContainer from './containers/ToDoAppContainer';
 import store from './redux/configStore'
 
 // Stateless Functional Component
@@ -12,7 +12,9 @@ const App = () => {
   return (
     <div>
         Hello World 
-        <ToDoApp />
+        <Provider store={store}>
+          <ToDoAppContainer />
+        </Provider>
     </div>
   )
 }

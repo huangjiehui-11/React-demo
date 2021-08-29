@@ -675,7 +675,219 @@ import store from './redux/configureStore';
 
 现在整个redux的基本结构已经搭建起来，下一步就可以把整个行为逻辑代码补充进去就可以了。
 
+# Redux Actions 和 Reducers
 
+搭建起redux的基本结构后，就可以填充redux的元素了，简单来说我们只需要记住四个概念， `Types`, `Actions`, `Action Creators`, and `Reducers`。然后把这些元素用`ducks`的文件组织结构组织起来就可以了。
+
+## Ducks
+
+### 规则
+
+在module中我们需要遵循下面的代码风格和命名方式：
+
+1. 须用 `export default` 输出名为 `reducer()`的函数
+2. 须用 `export` 输出 函数形式的`action creators`
+3. 须用 `npm-module-or-app/reducer/ACTION_TYPE`
+的命名形式来给`action types`赋值，因为到后期很多reducer，不同的人协同工作难免会出现命名重复，这样子加上app和模块的前缀的话就不会出现命名冲突的问题。
+4. 须用大写的蛇形方式`UPPER_SNAKE_CASE`来命名`action types`。
+
+## Types
+
+这个`types`就是用上面第4条的规范命名的常量名字，再用第3条给`action types`赋值，将其写在文件的顶部，当`action` 触发时候会传递给`reducer`，`reducer`的switch语句会根据这个type来进行相应的数据处理。
+
+```javascript
+const ADD_ITEM = 'my-app/toDoApp/ADD_ITEM';
+const DELETE_ITEM = 'my-app/toDoApp/DELETE_ITEM';
+```
+
+## Actions
+
+`Actions` 就是一个至少包含`type`的简单的js对象，同时可以包含数据以便传递给`reducer`。当用户在页面上触发了某种行为，一个`aciton creator`将会发送`aciton`给`reducer`做数据处理。
+
+`action`示例如下：
+
+```javascript
+{ type: ADD_ITEM, item: 'Adding this item' }
+{ type: DELETE_ITEM, index: 1 }
+{ type: POP_ITEM }
+```
+
+## Action Creators
+
+`Action creators` 是创建`acitons`并传递给`reducer`的函数,它通常返回一个`action`对象，有时候借用`thunk`这样的中间件也可以返回`dispatch`多个`actions`,在我们的app中为了简化暂时不涉及这个模式。
+
+```javascript
+function addItem(item){
+  return {
+    type: ADD_ITEM,
+    item // ES6中，如果参数名与键名一样，可以缩写，原型是item: item
+  }
+}
+```
+
+## Reducers
+
+`reducer`是唯一可以触碰`store`的元素，初始值为`initialState`，形式上就是一个简单的switch语句，但是注意不能直接改变state，因为state是immutable。也就是说我们不能直接使用`.pop` or `.push`这些方法操作数组。
+
+下面是示例代码:
+
+```javascript
+const initialState = {
+  list: []
+};
+
+export default function reducer(state = initialState, action){
+  switch (action.type){
+  case ADD_ITEM:
+    return Object.assign(
+      {},
+      state,
+      { list: [...state.list, action.item]} // here we see object.assign again, and we're returning a new state built from the old state without directly manipulating it
+    )
+  default:
+    return state;
+  }
+}
+```
+
+概念已经介绍完毕，下面开始将原来的功能逻辑用redux重写。
+
+## 1. Initial state
+
+首先我们在 `src/redux/modules/toDoApp`中声明`initialState`。
+
+初始化组件时，都是取的`initialState`对象的值。展示的也是初始的state的值，因为reducer里的switch执行的是default。
+
+```javascript
+const initialState = {
+  list: [{item:'thing1', done: false}, {item:'thing2', done: false}, {item:'thing3', done: false}] // just added this to test that state is being passed down propperly,
+  newToDo: ''
+};
+
+export default function reducer(state = initialState, action){
+  switch (action.type){
+  default:
+    return state;
+  }
+}
+```
+现在在 `ToDoApp.js`的 `render()` 方法中`return`之前添加`console.log(this.props)` 会打印出下面的对象：
+```javascript
+toDoApp: Object
+  list: Array[1]
+    0: "test"
+    length: 1
+    __proto__: Array[0]
+  __proto__: Object
+__proto__: Object
+```
+
+测试通过，我们就可以传递这些数据给子组件了，这里就可以把原来`List`组件的 `listItems` prop和`Input`的`value` prop替换掉了。 
+
+```javascript
+<List
+  listItems={this.props.toDoApp.list}
+/>
+<Input
+  value={this.props.toDoApp.newToDo}
+/>
+```
+
+这里只是替换掉了数据，下面还需要把action也替换。
+
+## 3. Input action
+
+这个过程就是把我们原来在`ToDoApp` 组件的行为逻辑全部迁移到redux文件夹下的 `toDoApp` module中去。
+
+
+```javascript
+const INPUT_CHANGED = 'INPUT_CHANGED';
+
+export function inputChange(value){
+  return {
+    type: INPUT_CHANGED,
+    value
+  }
+}
+```
+
+然后在reducer的switch中新增如下处理：
+
+```javascript
+case INPUT_CHANGED:
+    return Object.assign(
+      {},
+      state,
+      {newToDo: action.value}
+    );
+```
+
+
+在 `toDoAppContainer.js` 的 `mapDispatchToProps` 函数就需要返回相应的action，UI组件的props对象里才会存在对应的发起dispatch的function
+再从`toDoApp` module导入 `inputChange`, 这个是action creator，用于dispatch的参数：
+
+```javascript
+import { connect } from 'react-redux';
+import ToDoApp from '../components/ToDoApp.js'
+import {
+  inputChange
+} from '../redux/modules/toDoApp'; // we added this
+
+function mapStateToProps(state) {
+  return {
+    toDoApp: state.toDoApp // gives our component access to state through props.toDoApp
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    inputChange: (value) => dispatch(inputChange(value)) // we added this
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToDoApp);
+```
+
+再修改对应的UI组件：
+
+```javascript
+  // 未使用react-redux的写法：
+  // 写成箭头函数的形式，组件使用时不需要显示绑定this
+  // this.onInputChange = (event) => {
+  //   this.setState({ newToDo: event.target.value}); // updates state to new value when user changes the input value
+  // };
+
+  // 使用react-redux的写法
+  this.onInputChange = (event) => {
+    this.props.inputChange(event.target.value)  // 使用react-redux的容器组件的mapDispatchToProps里注册的函数 // 将修改state的逻辑放在了reducer里
+  } 
+```
+
+这样state和action都传递给了`toDoApp`然后再通过props传递给子组件就可以使用了，具体都可以看项目最终代码。
+
+## 4. 其他 actions
+
+其他acitons的代码模式跟上面的基本一样，整体思路：
+
+1、src目录下新建redux文件夹，configStore.js下配置store
+2、在modules下创建组件的逻辑js文件：
+   定义initialState，
+   export Action Creator，用于作为对应容器组件的mapDispatchToProps里dispatch的参数，
+   export default reducer，用于接收处理mapDispatchToProps里dispatch过来的action，在这里对initialState进行修改。
+3、src目录下新建containers文件，在containers下创建组件的容器组件js文件：
+   mapStateToProps() : 将 state 传给UI组件的 props 对象，
+   mapDispatchToProps：注册UI组件的 props 对象的函数，用于 dispatch 发出 action 给对应 reducer 生成新的 state,
+   使用connect() 生成容器组件。
+4、UI组件：绑定事件：this.props.xxx （对应 mapDispatchToProps 里注册的函数）。
+
+## 总结
+
+使用redux，将每个子组件的 state 维护在了一个统一的 store 里，通过 Provider 组件将 store 传给了所有的子组件，也就能实现组件之间的相互通信了，可以拿到其他组件的state。
+
+到这里一个使用webpack打包的react+redux(ducks)的基本应用模型就出来了，虽然简单但是是我们进行更复杂项目的基础，并且有了这些基础后面的路程将会顺畅多了，一起加入react的大家庭吧。
 
 
 
