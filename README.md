@@ -873,19 +873,22 @@ export default connect(
 其他acitons的代码模式跟上面的基本一样，整体思路：
 
 1、src目录下新建redux文件夹，configStore.js下配置store
-2、在modules下创建组件的逻辑js文件：
-   定义initialState，
+2、redux下新建modules，创建组件的逻辑js文件：
+   定义initialState，会存放在store下，全局只有一个store，通过Provider组件可以让所有子组件都拿到，
    export Action Creator，用于作为对应容器组件的mapDispatchToProps里dispatch的参数，
    export default reducer，用于接收处理mapDispatchToProps里dispatch过来的action，在这里对initialState进行修改。
 3、src目录下新建containers文件，在containers下创建组件的容器组件js文件：
+   redux中都是借助容器组件来实现父子组件的通信，以及组件间的通信的（store对象 = props对象），
    mapStateToProps() : 将 state 传给UI组件的 props 对象，
    mapDispatchToProps：注册UI组件的 props 对象的函数，用于 dispatch 发出 action 给对应 reducer 生成新的 state,
    使用connect() 生成容器组件。
-4、UI组件：绑定事件：this.props.xxx （对应 mapDispatchToProps 里注册的函数）。
+4、UI组件：
+   获取数据：this.props.xxx.xxx（对应 mapStateToProps 里返回的对象）
+   dispatch事件：this.props.xxx （对应 mapDispatchToProps 里注册的函数）。
 
 ## 总结
 
-使用redux，将每个子组件的 state 维护在了一个统一的 store 里，通过 Provider 组件将 store 传给了所有的子组件，也就能实现组件之间的相互通信了，可以拿到其他组件的state。
+使用redux，将每个子组件的 state 维护在了一个统一的 store 里，通过 Provider 组件将 store 传给了所有的子组件，也就能实现组件之间的相互通信了，因为可以拿到其他组件的state。
 
 到这里一个使用webpack打包的react+redux(ducks)的基本应用模型就出来了，虽然简单但是是我们进行更复杂项目的基础，并且有了这些基础后面的路程将会顺畅多了，一起加入react的大家庭吧。
 

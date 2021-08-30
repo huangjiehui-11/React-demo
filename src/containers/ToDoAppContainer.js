@@ -5,7 +5,7 @@ import { inputChange, inputSubmit, listItemClick, deleteListItem } from "../redu
 function mapStateToProps(state) {
   return {
     // state参数为Provider组件传递的store对象，会去store对象里的合并的ruducer找到匹配到的同名的reducer所对应的那个js文件所export default导出的reducer（这个reducer会根据action.type返回对应的action对象）
-    toDoApp: state.toDoApp  // return出去的对象就是传给UI组件的props对象，keys就是传给对应UI组件props这个对象里的变量名
+    toDoApp: state.toDoApp  // return的对象 = UI组件的props对象，keys就是传给对应UI组件props这个对象里的变量名
   }
 }
 
