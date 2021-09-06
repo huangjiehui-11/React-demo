@@ -6,6 +6,7 @@ import ToDoApp from './components/ToDoApp';
 import ToDoAppContainer from './containers/ToDoAppContainer';
 import store from './redux/configStore'
 
+
 // Stateless Functional Component
 // 函数型组件没有生命周期方法和state属性，但有props参数
 const App = () => {

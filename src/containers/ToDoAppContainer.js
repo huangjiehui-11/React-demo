@@ -9,6 +9,11 @@ function mapStateToProps(state) {
   }
 }
 
+// 箭头函数写法，箭头函数返回的对象的话必须用（）包裹
+// const mapStateToProps = state => ({
+//   toDoApp: state.toDoApp
+// })
+
 function mapDispatchToProps(dispatch) {
   // return一个对象，对象里的键值对就是对应容器组件所使用的函数
   // 必须在这里加入对应函数，UI组件的props对象里才会存在

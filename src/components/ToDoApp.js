@@ -124,7 +124,8 @@ class ToDoApp extends React.Component {
               <button onClick={() => this.handleClick()}>无bind点击一下（普通函数形式）</button>
               <button onClick={this.handleClick.bind(this)}>有bind点击一下（普通函数形式）</button>
               <hr/>
-              {/* <Time /> */}
+              <p>性能优化，避免无需更新的组件重复渲染：shouldComponentUpdate、PureComponent、React.memo、useMemo</p>
+              <Time />
               <hr/>
               <ReactHooks />
               <hr/>
