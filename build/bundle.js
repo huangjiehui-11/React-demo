@@ -447,7 +447,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(6);
-var createDesc = __webpack_require__(15);
+var createDesc = __webpack_require__(20);
 module.exports = __webpack_require__(8) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -486,6 +486,122 @@ module.exports = function (it) {
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(101), __esModule: true };
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__(89);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _setPrototypeOf = __webpack_require__(90);
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _create = __webpack_require__(88);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _typeof2 = __webpack_require__(48);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof2 = __webpack_require__(48);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
+};
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -499,7 +615,7 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 16 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -596,7 +712,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 17 */
+/* 22 */
 /***/ (function(module, exports) {
 
 var g;
@@ -621,122 +737,6 @@ try {
 
 module.exports = g;
 
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(101), __esModule: true };
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _defineProperty = __webpack_require__(89);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _setPrototypeOf = __webpack_require__(90);
-
-var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
-
-var _create = __webpack_require__(88);
-
-var _create2 = _interopRequireDefault(_create);
-
-var _typeof2 = __webpack_require__(48);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
-  }
-
-  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _typeof2 = __webpack_require__(48);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
-};
 
 /***/ }),
 /* 23 */
@@ -1197,23 +1197,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = __webpack_require__(18);
+var _getPrototypeOf = __webpack_require__(15);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(19);
+var _classCallCheck2 = __webpack_require__(16);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(20);
+var _createClass2 = __webpack_require__(17);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = __webpack_require__(22);
+var _possibleConstructorReturn2 = __webpack_require__(19);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(21);
+var _inherits2 = __webpack_require__(18);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -1417,6 +1417,12 @@ var ToDoApp = function (_React$Component) {
                 '\u6709bind\u70B9\u51FB\u4E00\u4E0B\uFF08\u666E\u901A\u51FD\u6570\u5F62\u5F0F\uFF09'
               ),
               _react2.default.createElement('hr', null),
+              _react2.default.createElement(
+                'p',
+                null,
+                '\u6027\u80FD\u4F18\u5316\uFF0C\u907F\u514D\u65E0\u9700\u66F4\u65B0\u7684\u7EC4\u4EF6\u91CD\u590D\u6E32\u67D3\uFF1AshouldComponentUpdate\u3001PureComponent\u3001React.memo\u3001useMemo'
+              ),
+              _react2.default.createElement(_Timing2.default, null),
               _react2.default.createElement('hr', null),
               _react2.default.createElement(_ReactHooks2.default, null),
               _react2.default.createElement('hr', null),
@@ -1693,7 +1699,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(25);
-var createDesc = __webpack_require__(15);
+var createDesc = __webpack_require__(20);
 var toIObject = __webpack_require__(14);
 var toPrimitive = __webpack_require__(39);
 var has = __webpack_require__(9);
@@ -19111,7 +19117,7 @@ module.exports = Symbol;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(186)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22), __webpack_require__(186)(module)))
 
 /***/ }),
 /* 65 */
@@ -19823,17 +19829,100 @@ var _slicedToArray2 = __webpack_require__(93);
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
+var _getPrototypeOf = __webpack_require__(15);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(16);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(17);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(19);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(18);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
 var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// 通过 useRef 获取的子组件必须是类组件
+var Children1 = function (_React$PureComponent) {
+  (0, _inherits3.default)(Children1, _React$PureComponent);
+
+  function Children1() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    (0, _classCallCheck3.default)(this, Children1);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Children1.__proto__ || (0, _getPrototypeOf2.default)(Children1)).call.apply(_ref, [this].concat(args))), _this), _this.introduce1 = function () {
+      console.log('i can sing, jump, rap, play basketball');
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+  }
+
+  (0, _createClass3.default)(Children1, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          '\u6211\u662F\u5B50\u7EC4\u4EF61'
+        )
+      );
+    }
+  }]);
+  return Children1;
+}(_react2.default.PureComponent);
+
+var Children2 = function (_React$PureComponent2) {
+  (0, _inherits3.default)(Children2, _React$PureComponent2);
+
+  function Children2() {
+    (0, _classCallCheck3.default)(this, Children2);
+    return (0, _possibleConstructorReturn3.default)(this, (Children2.__proto__ || (0, _getPrototypeOf2.default)(Children2)).apply(this, arguments));
+  }
+
+  (0, _createClass3.default)(Children2, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          '\u6211\u662F\u5B50\u7EC4\u4EF62'
+        )
+      );
+    }
+  }]);
+  return Children2;
+}(_react2.default.PureComponent);
+
 // useImperativeHandle
 // 子组件可以选择性的暴露给父组件一些方法，这样可以隐藏一些私有方法和属性。
 // 官方建议，useImperativeHandle应当与 forwardRef 一起使用
+
+
 function Kun(props, ref) {
-  var kun = (0, _react.useRef)();
 
   var _introduce = (0, _react.useCallback)(function () {
     console.log('i can sing, jump, rap, play basketball');
@@ -19849,7 +19938,7 @@ function Kun(props, ref) {
 
   return _react2.default.createElement(
     'div',
-    { ref: kun },
+    null,
     ' ',
     props.count
   );
@@ -19916,20 +20005,71 @@ function ReactHooks() {
     };
   }, []);
 
+  (0, _react.useEffect)(function () {
+    // 相当于 componentDidUpdate
+    document.title = count;
+  });
+
+  (0, _react.useEffect)(function () {
+    console.log('count change: count is ' + count);
+  }, [count]);
+
   // useMemo 
-  // 与 Vue 的computed 计算属性类似，都是根据依赖的值计算出结果，当依赖的值未发生改变的时候，不触发状态改变
-  // useMemo 会在渲染的时候执行，而不是渲染之后执行，这一点和 useEffect 有区别，所以 useMemo 不建议有 副作用相关的逻辑
+  // useMemo类似于计算属性，控制某些状态{函数方法}是否随着组件更新渲染重复调用
+  // useMemo可以避免函数组件的某些无需重复执行的方法因为组件render更新渲染而被重复调用，将这些可能不需要执行的方法传入useMemo()的第一个参数return出去
+  // useMemo 会在渲染的时候执行，而不是渲染之后执行，这一点和 useEffect 有区别，所以 useMemo 不建议有副作用相关的逻辑，会阻塞渲染
 
   var _useState7 = (0, _react.useState)(0),
       _useState8 = (0, _slicedToArray3.default)(_useState7, 2),
       count = _useState8[0],
       setCount = _useState8[1]; // useState设置的变量count只能通过setCount方法来改变
+  // console.log('count: ', count)
+
+  // 只有当依赖的值count发生变化时，才会执行回调函数
+
 
   var add = (0, _react.useMemo)(function () {
+    console.log("该回调函数被调用");
     return count + 1;
   }, [count]);
 
+  // 空数组，只会执行一次回调函数，之后count发生改变也不会再执行，因为会再执行回调函数，因此count+1不会执行，{add}这个状态不会再改变
+  // const add = useMemo(() => {
+  //   console.log("该回调函数被调用")
+  //   return count + 1
+  // }, [])
+
+  // 不传数组，相当无优化，每次组件更新渲染都会执行回调函数
+  // const add = useMemo(() => {
+  //   console.log("该回调函数被调用")
+  //   return count + 1
+  // })
+
+  // useRef
+  // 类似于类组件的React.createRef()，函数组件获取Dom只能通过useRef
+  // useRef的参数为设定默认值
+  // 因为没有任何一个子组件的ref属性为childrenRef，所以childrenRef.current会赋值为默认值null
+  // 因为没有子组件的设定ref属性为childrenRef，所以用不用无所谓，用了就会使用默认值
+  var childrenRef = (0, _react.useRef)(null);
+
+  // 只要有子组件定义了ref属性，必须拿ref属性的值使用 ref = useRef(), 否则会报错
+  // 直接拿Children1组件ref的属性值当变量，也就直接指定了该变量的current指向该子组件
+  // 例如子组件Children1定义了ref属性为childrenRef1，所以必须使用 const childrenRef1 = useRef(childrenRef1)
+  var childrenRef1 = (0, _react.useRef)(null);
+  var childrenRef2 = (0, _react.useRef)(null);
+
+  var onClick1 = (0, _react.useMemo)(function () {
+    return function () {
+      console.log('button click');
+      console.log(childrenRef.current.textContent); // null
+      console.log(childrenRef1.current.introduce1); // Children1
+      // console.log(this.refs.child1)    // 只有在类组件才可以用
+      console.log(childrenRef2.current); // Children2
+    };
+  }, []);
+
   // useReducer
+  // useReducer的功能类似于useState + redux
   // 它更适合一些逻辑较复杂且包含多个子值，或者下一个 state 依赖于之前的 state 等等的特定场景
   // userReducer有三个参数：函数参数、初始state、惰性初始化
   function reducer(state, action) {
@@ -19953,14 +20093,17 @@ function ReactHooks() {
       _useReducer2 = (0, _slicedToArray3.default)(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
+  // console.log('state: ', state)
 
   // useImperativeHandle
+  // useRef可以拿到子组件的全部，使用useImperativeHandle可以让子组件选择性地暴露
 
 
   var _useState9 = (0, _react.useState)(0),
       _useState10 = (0, _slicedToArray3.default)(_useState9, 2),
       count2 = _useState10[0],
       setCount2 = _useState10[1]; // 注意定义state新的变量，避免与其他的hook里state的相同变量相互影响
+  // console.log('count2: ', count2)
 
   var kunRef = (0, _react.useRef)(null);
 
@@ -20014,8 +20157,17 @@ function ReactHooks() {
       null,
       'useEffect\uFF1A'
     ),
+    '\u9875\u9762\u540D\u79F0: ',
+    count,
     'width\uFF1A',
     width,
+    _react2.default.createElement(
+      'button',
+      { onClick: function onClick() {
+          setCount(count + 1);
+        } },
+      '\u70B9\u6211'
+    ),
     _react2.default.createElement('hr', null),
     _react2.default.createElement(
       'p',
@@ -20032,6 +20184,24 @@ function ReactHooks() {
       { onClick: function onClick() {
           setCount(count + 1);
         } },
+      '\u70B9\u6211'
+    ),
+    _react2.default.createElement('hr', null),
+    _react2.default.createElement(
+      'p',
+      null,
+      'useRef\uFF1A'
+    ),
+    _react2.default.createElement(
+      'p',
+      { ref: childrenRef },
+      '\u51FD\u6570\u7EC4\u4EF6\u91CC\u7684\u539F\u751FDo\u4E0D\u80FD\u901A\u8FC7this.ref\u83B7\u53D6\uFF0C\u53EA\u80FD\u901A\u8FC7useRef'
+    ),
+    _react2.default.createElement(Children1, { ref: childrenRef1 }),
+    _react2.default.createElement(Children2, { ref: childrenRef2 }),
+    _react2.default.createElement(
+      'button',
+      { onClick: onClick1 },
       '\u70B9\u6211'
     ),
     _react2.default.createElement('hr', null),
@@ -20094,23 +20264,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = __webpack_require__(18);
+var _getPrototypeOf = __webpack_require__(15);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(19);
+var _classCallCheck2 = __webpack_require__(16);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(20);
+var _createClass2 = __webpack_require__(17);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = __webpack_require__(22);
+var _possibleConstructorReturn2 = __webpack_require__(19);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(21);
+var _inherits2 = __webpack_require__(18);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -20195,23 +20365,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = __webpack_require__(18);
+var _getPrototypeOf = __webpack_require__(15);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(19);
+var _classCallCheck2 = __webpack_require__(16);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(20);
+var _createClass2 = __webpack_require__(17);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = __webpack_require__(22);
+var _possibleConstructorReturn2 = __webpack_require__(19);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(21);
+var _inherits2 = __webpack_require__(18);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -20293,23 +20463,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getPrototypeOf = __webpack_require__(18);
+var _getPrototypeOf = __webpack_require__(15);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = __webpack_require__(19);
+var _classCallCheck2 = __webpack_require__(16);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(20);
+var _createClass2 = __webpack_require__(17);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = __webpack_require__(22);
+var _possibleConstructorReturn2 = __webpack_require__(19);
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = __webpack_require__(21);
+var _inherits2 = __webpack_require__(18);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
@@ -20405,9 +20575,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function mapStateToProps(state) {
   return {
     // state参数为Provider组件传递的store对象，会去store对象里的合并的ruducer找到匹配到的同名的reducer所对应的那个js文件所export default导出的reducer（这个reducer会根据action.type返回对应的action对象）
-    toDoApp: state.toDoApp // return出去的对象就是传给UI组件的props对象，keys就是传给对应UI组件props这个对象里的变量名
+    toDoApp: state.toDoApp // return的对象 = UI组件的props对象，keys就是传给对应UI组件props这个对象里的变量名
   };
 }
+
+// 箭头函数写法，箭头函数返回的对象的话必须用（）包裹
+// const mapStateToProps = state => ({
+//   toDoApp: state.toDoApp
+// })
 
 function mapDispatchToProps(dispatch) {
   // return一个对象，对象里的键值对就是对应容器组件所使用的函数
@@ -20753,7 +20928,7 @@ module.exports = function (IS_INCLUDES) {
 "use strict";
 
 var $defineProperty = __webpack_require__(6);
-var createDesc = __webpack_require__(15);
+var createDesc = __webpack_require__(20);
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -20840,7 +21015,7 @@ module.exports = function (iterator, fn, value, entries) {
 "use strict";
 
 var create = __webpack_require__(33);
-var descriptor = __webpack_require__(15);
+var descriptor = __webpack_require__(20);
 var setToStringTag = __webpack_require__(35);
 var IteratorPrototype = {};
 
@@ -21315,7 +21490,7 @@ var anObject = __webpack_require__(7);
 var isObject = __webpack_require__(12);
 var toIObject = __webpack_require__(14);
 var toPrimitive = __webpack_require__(39);
-var createDesc = __webpack_require__(15);
+var createDesc = __webpack_require__(20);
 var _create = __webpack_require__(33);
 var gOPNExt = __webpack_require__(120);
 var $GOPD = __webpack_require__(54);
@@ -21972,7 +22147,7 @@ __webpack_require__(40)('observable');
   return accumulateDiff;
 }));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ }),
 /* 139 */
@@ -22189,7 +22364,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 /* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(17)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(22)))
 
 /***/ }),
 /* 143 */
@@ -22406,7 +22581,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 module.exports = freeGlobal;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
 
 /***/ }),
 /* 151 */
@@ -22725,7 +22900,7 @@ module.exports = function() {
 
 
 var ReactIs = __webpack_require__(45);
-var assign = __webpack_require__(16);
+var assign = __webpack_require__(21);
 
 var ReactPropTypesSecret = __webpack_require__(44);
 var checkPropTypes = __webpack_require__(43);
@@ -23332,7 +23507,7 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 var React = __webpack_require__(2);
-var _assign = __webpack_require__(16);
+var _assign = __webpack_require__(21);
 var Scheduler = __webpack_require__(74);
 var checkPropTypes = __webpack_require__(43);
 var tracing = __webpack_require__(182);
@@ -48346,7 +48521,7 @@ exports.version = ReactVersion;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(2),n=__webpack_require__(16),r=__webpack_require__(74);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
+var aa=__webpack_require__(2),n=__webpack_require__(21),r=__webpack_require__(74);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
 function ba(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,k){da=!1;ea=null;ba.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,k){ja.apply(this,arguments);if(da){if(da){var l=ea;da=!1;ea=null}else throw Error(u(198));fa||(fa=!0,ha=l)}}var la=null,ma=null,na=null;
 function oa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=na(c);ka(d,b,void 0,a);a.currentTarget=null}var pa=null,qa={};
 function ra(){if(pa)for(var a in qa){var b=qa[a],c=pa.indexOf(a);if(!(-1<c))throw Error(u(96,a));if(!sa[c]){if(!b.extractEvents)throw Error(u(97,a));sa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;if(ta.hasOwnProperty(h))throw Error(u(99,h));ta[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ua(k[e],g,h);e=!0}else f.registrationName?(ua(f.registrationName,g,h),e=!0):e=!1;if(!e)throw Error(u(98,d,a));}}}}
@@ -49448,7 +49623,7 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(16);
+var _assign = __webpack_require__(21);
 var checkPropTypes = __webpack_require__(43);
 
 var ReactVersion = '16.14.0';
@@ -51360,7 +51535,7 @@ exports.version = ReactVersion;
  * LICENSE file in the root directory of this source tree.
  */
 
-var l=__webpack_require__(16),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,z=n?Symbol.for("react.memo"):60115,A=n?Symbol.for("react.lazy"):
+var l=__webpack_require__(21),n="function"===typeof Symbol&&Symbol.for,p=n?Symbol.for("react.element"):60103,q=n?Symbol.for("react.portal"):60106,r=n?Symbol.for("react.fragment"):60107,t=n?Symbol.for("react.strict_mode"):60108,u=n?Symbol.for("react.profiler"):60114,v=n?Symbol.for("react.provider"):60109,w=n?Symbol.for("react.context"):60110,x=n?Symbol.for("react.forward_ref"):60112,y=n?Symbol.for("react.suspense"):60113,z=n?Symbol.for("react.memo"):60115,A=n?Symbol.for("react.lazy"):
 60116,B="function"===typeof Symbol&&Symbol.iterator;function C(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}
 var D={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}},E={};function F(a,b,c){this.props=a;this.context=b;this.refs=E;this.updater=c||D}F.prototype.isReactComponent={};F.prototype.setState=function(a,b){if("object"!==typeof a&&"function"!==typeof a&&null!=a)throw Error(C(85));this.updater.enqueueSetState(this,a,b,"setState")};F.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};
 function G(){}G.prototype=F.prototype;function H(a,b,c){this.props=a;this.context=b;this.refs=E;this.updater=c||D}var I=H.prototype=new G;I.constructor=H;l(I,F.prototype);I.isPureReactComponent=!0;var J={current:null},K=Object.prototype.hasOwnProperty,L={key:!0,ref:!0,__self:!0,__source:!0};
@@ -53376,7 +53551,7 @@ if (typeof self !== 'undefined') {
 var result = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__ponyfill_js__["a" /* default */])(root);
 /* harmony default export */ __webpack_exports__["a"] = (result);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(17), __webpack_require__(185)(module)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(22), __webpack_require__(185)(module)))
 
 /***/ }),
 /* 184 */
