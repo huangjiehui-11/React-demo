@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import ToDoApp from './components/ToDoApp';
 import ToDoAppContainer from './containers/ToDoAppContainer';
-import store from './redux/configStore'
+import store from './redux/store'
 
 
 // Stateless Functional Component

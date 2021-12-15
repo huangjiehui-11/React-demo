@@ -4,6 +4,8 @@ import List from './List';
 import Time from './Timing';
 import ReactHooks from './ReactHooks';
 import Stop from './Stop';
+import RadioInput from './RadioInput';
+import UseEffectDemo from './UseEffectDemo';
 
 class ToDoApp extends React.Component {
   constructor(props) {
@@ -11,7 +13,8 @@ class ToDoApp extends React.Component {
     this.state = {
       list: [{item:'thing1', done: false}, {item:'thing2', done: false}, {item:'thing3', done: false}],
       newToDo: 'test',
-      count: 0
+      count: 0,
+      value: ''
     }
   }
 
@@ -96,6 +99,16 @@ class ToDoApp extends React.Component {
     this.props.deleteListItem(i)  // 将修改state的逻辑放在了reducer里
   }
 
+  callback = (value) => {
+    this.setState({
+      value: value
+    })
+  }
+  
+  submitValue = () => {
+    console.log(this.state.value)
+  }
+
   render() {
     console.log('This.state.newToDo: ', this.state.newToDo)
     console.log(this.props)
@@ -130,6 +143,11 @@ class ToDoApp extends React.Component {
               <ReactHooks />
               <hr/>
               <Stop />
+              <hr/>
+              <RadioInput callback={this.callback}/>
+              <button onClick={this.submitValue}>提交</button>
+              <hr/>
+              <UseEffectDemo />
             </div>
           </div>
         </div>
