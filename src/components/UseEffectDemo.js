@@ -5,13 +5,18 @@ function UseEffectDemo() {
   const [count, setCount] = React.useState(0);
   const preCountUseRef = React.useRef(count);
 
+
   useEffect(() => {
     preCountUseRef.current = count;
     console.log("@")
     return function() {
       console.log("X")
     }
-  },[count])
+  })
+
+  // useLayoutEffect(() => {
+  //   preCountUseRef.current = count;
+  // },[count])
 
   return (
     <div>
