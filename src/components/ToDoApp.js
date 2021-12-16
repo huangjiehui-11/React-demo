@@ -6,15 +6,18 @@ import ReactHooks from './ReactHooks';
 import Stop from './Stop';
 import RadioInput from './RadioInput';
 import UseEffectDemo from './UseEffectDemo';
+import NewLifeHook from './NewLifeHook';
 
 class ToDoApp extends React.Component {
   constructor(props) {
     super(props);
+    console.log('constructor: ',this.props)
     this.state = {
       list: [{item:'thing1', done: false}, {item:'thing2', done: false}, {item:'thing3', done: false}],
       newToDo: 'test',
       count: 0,
-      value: ''
+      value: '',
+      hasChild: true
     }
   }
 
@@ -109,9 +112,15 @@ class ToDoApp extends React.Component {
     console.log(this.state.value)
   }
 
+  death = () => {
+    console.log('this>>>>', this)
+    this.setState({hasChild: false})
+  }
+
   render() {
     console.log('This.state.newToDo: ', this.state.newToDo)
-    console.log(this.props)
+    console.log('this.props：', this.props)
+    const {hasChild} = this.state
     return (
       <div className="row">
         <div className="col-md-10 col-md-offset-1">
@@ -148,6 +157,8 @@ class ToDoApp extends React.Component {
               <button onClick={this.submitValue}>提交</button>
               <hr/>
               <UseEffectDemo />
+              <hr/>
+              { hasChild && (<NewLifeHook death={this.death}/>) }
             </div>
           </div>
         </div>
