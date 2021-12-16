@@ -65,6 +65,7 @@ export default function reducer(state = initialState, action) {
         }
       )
     case DELETE_LIST_ITEM:
+      console.log('state>>>>>>>', state)
       return Object.assign(
         {},
         state,
@@ -75,6 +76,7 @@ export default function reducer(state = initialState, action) {
           ]
         }
       );
+
     default:
       return state;  // 一开始渲染没操作的时候就是返回这个初始值
   }

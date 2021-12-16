@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import ToDoApp from '../components/ToDoApp.js'
-import { inputChange, inputSubmit, listItemClick, deleteListItem } from "../redux/modules/toDoApp.js";
+import { inputChange, inputSubmit, listItemClick, deleteListItem } from "../redux/modules/reducer";
 
 function mapStateToProps(state) {
   return {

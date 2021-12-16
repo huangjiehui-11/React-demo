@@ -5,9 +5,18 @@ function UseEffectDemo() {
   const [count, setCount] = React.useState(0);
   const preCountUseRef = React.useRef(count);
 
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     preCountUseRef.current = count;
-  },[count])
+    console.log("@")
+    return function() {
+      console.log("X")
+    }
+  })
+
+  // useLayoutEffect(() => {
+  //   preCountUseRef.current = count;
+  // },[count])
 
   return (
     <div>
@@ -23,5 +32,37 @@ function UseEffectDemo() {
     </div>
   )
 }
+
+// class UseEffectDemo extends React.Component {
+//   state = {
+//     count: 0
+//   }
+
+//   add = () => {
+//     const count = this.state.count += 1
+//     this.setState({count});
+//   }
+
+//   componentDidMount() {
+//     console.log("componentDidMount")
+//   }
+
+//   componentWillUnmount() {
+//     console.log("componentWillUnmount")
+//   }
+
+//   render() {
+//     const {count} = this.state
+//     return (
+//       <div>
+//         <p>count: {count}</p >
+//         <button onClick={this.add}>
+//           click
+//         </button>
+//       </div>
+//     )
+//   }
+
+// }
 
 export default UseEffectDemo
